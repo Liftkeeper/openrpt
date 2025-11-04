@@ -185,7 +185,12 @@ keeps the upstream packaging layout:
    example `../openrpt_<version>_amd64.deb`). This binary contains the classic
    OpenRPT application suite (writer, renderer, database utilities, etc.).
 
-5. You can now install both packages side by side:
+5. You can now install both packages side by side or, for convenience, run
+   `./scripts/build_full_deb.sh` from the repository root. The script performs
+   the Qt5 build, stages the binaries, and outputs a `.deb` under
+   `package-root/` for installation alongside `openrpt-cli`.
+
+6. You can now install both packages side by side:
 
    ```bash
    sudo apt install ./debian/artifacts/openrpt-cli_*.deb \
