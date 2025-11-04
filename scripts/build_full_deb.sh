@@ -10,6 +10,9 @@ cd "$REPO_ROOT"
 
 [[ -f openrpt.pro ]] || die "Run this script from the OpenRPT repository root."
 
+# prefer the distro libdmtx unless caller overrides
+export USE_SYSTEM_DMTX="${USE_SYSTEM_DMTX:-1}"
+
 if command -v apt-get >/dev/null 2>&1; then
   if [[ "${SKIP_DEP_INSTALL:-}" != "1" ]]; then
     if sudo -n true 2>/dev/null; then
