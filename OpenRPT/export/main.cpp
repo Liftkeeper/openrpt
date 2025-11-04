@@ -59,10 +59,6 @@ int main(int argc, char *argv[])
 
     if (  (databaseURL != "") && (username != "") ) {
       QSqlDatabase db;
-      QString      protocol;
-      QString      hostName;
-      QString      dbName;
-      QString      port;
 
 // Open the Database Driver
       db = databaseFromURL(databaseURL);
@@ -73,18 +69,15 @@ int main(int argc, char *argv[])
       }
 
 //  Try to connect to the Database
-      bool valport = false;
-      int iport = port.toInt(&valport);
-      if(!valport) iport = 5432;
       db.setUserName(username);
       if(!passwd.isEmpty())
         db.setPassword(passwd);
       if (!db.open())
       {
         printf( "Host=%s, Database=%s, port=%s\n",
-                hostName.toLatin1().data(),
-                dbName.toLatin1().data(),
-                port.toLatin1().data() );
+                db.hostName().toLatin1().constData(),
+                db.databaseName().toLatin1().constData(),
+                QByteArray::number(db.port()).constData() );
 
         printf( "Could not log into database.  System Error: %s\n",
                 db.lastError().text().toLatin1().data() );

@@ -22,7 +22,6 @@
 
 #include <QCoreApplication>
 #include <QString>
-#include <QRegExp>
 #include <QSqlDatabase>
 #include <QVariant>
 #include <QFile>
@@ -49,7 +48,7 @@ int main(int argc, char *argv[])
     QString passwd;
     QString arguments;
 
-    QString xml_file = QString::null;
+    QString xml_file;
     int     report_grade = 0;
 
     for (int counter = 1; counter < argc; counter++)
@@ -70,9 +69,9 @@ int main(int argc, char *argv[])
         xml_file = arguments;
     }
 
-    QString report_name = QString::null;
-    QString report_desc = QString::null;
-    QString report_src  = QString::null;
+    QString report_name;
+    QString report_desc;
+    QString report_src;
 
     if(xml_file != "") {
         QFile file(xml_file);
@@ -94,19 +93,19 @@ int main(int argc, char *argv[])
                     report_src  = doc.toString();
 
                     if(report_name == "") {
-                        out << "The document " << xml_file << " does not have a report name defined." << endl;
+                        out << "The document " << xml_file << " does not have a report name defined." << Qt::endl;
                     }
                 } else {
-                    out << "XML Document " << xml_file << " does not have root node of report." << endl;
+                    out << "XML Document " << xml_file << " does not have root node of report." << Qt::endl;
                 }
             } else {
-                out << "Error parsing file " << xml_file << ": " << errMsg << " on line " << errLine << " column " << errCol << endl;
+                out << "Error parsing file " << xml_file << ": " << errMsg << " on line " << errLine << " column " << errCol << Qt::endl;
             }
         } else {
-            out << "Could not open the specified file: " << xml_file << endl;
+            out << "Could not open the specified file: " << xml_file << Qt::endl;
         }
     } else {
-        out << "You must specify an XML file to load by using the -f= parameter." << endl;
+        out << "You must specify an XML file to load by using the -f= parameter." << Qt::endl;
     }
 
     if(report_name == "" || report_src == "") {
@@ -123,7 +122,7 @@ int main(int argc, char *argv[])
       db = databaseFromURL( databaseURL );
       if (!db.isValid())
       {
-        out << "Could not load the specified database driver." << endl;
+        out << "Could not load the specified database driver." << Qt::endl;
         exit(-1);
       }
 
@@ -132,9 +131,9 @@ int main(int argc, char *argv[])
       db.setPassword(passwd);
       if (!db.open())
       {
-        out << "Host=" << db.hostName() << ", Database=" << db.databaseName() << ", port=" << db.port() << endl;
+        out << "Host=" << db.hostName() << ", Database=" << db.databaseName() << ", port=" << db.port() << Qt::endl;
         out << "Could not log into database.  System Error: "
-            << db.lastError().text() << endl;
+            << db.lastError().text() << Qt::endl;
         exit(-1);
       }
 
@@ -166,20 +165,20 @@ int main(int argc, char *argv[])
       
       if(!query.exec()) {
           QSqlError err = query.lastError();
-          out << "Error: " << err.driverText() << endl
-              << "\t" << err.databaseText() << endl;
+          out << "Error: " << err.driverText() << Qt::endl
+              << "\t" << err.databaseText() << Qt::endl;
           exit(-1);
       }
       
     }
     else if (databaseURL == "")
-      out << "You must specify a Database URL by using the -databaseURL= parameter." << endl;
+      out << "You must specify a Database URL by using the -databaseURL= parameter." << Qt::endl;
     else if (username == "")
-      out << "You must specify a Database Username by using the -username= parameter." << endl;
+      out << "You must specify a Database Username by using the -username= parameter." << Qt::endl;
     else if (passwd == "")
-      out << "You must specify a Database Password by using the -passwd= parameter." << endl;
+      out << "You must specify a Database Password by using the -passwd= parameter." << Qt::endl;
   }
   else
-    out << "Usage: import -databaseURL='$' -username='$' -passwd='$' -grade=# -f='$'" << endl;
+    out << "Usage: import -databaseURL='$' -username='$' -passwd='$' -grade=# -f='$'" << Qt::endl;
   return 0;
 }

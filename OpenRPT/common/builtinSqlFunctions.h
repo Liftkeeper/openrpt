@@ -20,10 +20,9 @@
 #ifndef __BUILTIN_SQL_FUNCTIONS_H__
 #define __BUILTIN_SQL_FUNCTIONS_H__
 
-#include <qstring.h>
+#include <QString>
 
 QString getSqlFromTag(const QString &, const QString &);
 bool getSqlDriver(const QString &);
 
 #endif
-

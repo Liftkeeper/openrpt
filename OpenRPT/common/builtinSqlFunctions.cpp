@@ -16,7 +16,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  * Please contact info@openmfg.com with any questions on this license.
  */
-#include <QtGui>
+#include <QString>
 
 #include "builtinSqlFunctions.h"
 
@@ -254,5 +254,5 @@ QString getSqlFromTag(const QString & stTag, const QString & stDriver)
       return __SqlTable[i][__fieldSql];
     }
 
-  return QString::null;
+  return QString();
 }

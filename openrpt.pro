@@ -25,20 +25,25 @@ bundled_dmtx {
 }
 
 TEMPLATE = subdirs
-SUBDIRS = common \
-          graph \
-          MetaSQL \
-          MetaSQL/metasql_gui \
-          MetaSQL/importmql_gui \
-          $$DMTX_SRC \
-          OpenRPT/qzint \
-          OpenRPT/renderer \
-          OpenRPT/wrtembed \
-          OpenRPT/writer \
-          OpenRPT/renderapp \
-          OpenRPT/import \
-          OpenRPT/import_gui \
-          OpenRPT/export
+
+cli_only {
+  SUBDIRS = OpenRPT/import \
+            OpenRPT/export
+} else {
+  SUBDIRS = common \
+            graph \
+            MetaSQL \
+            MetaSQL/metasql_gui \
+            MetaSQL/importmql_gui \
+            $$DMTX_SRC \
+            OpenRPT/qzint \
+            OpenRPT/renderer \
+            OpenRPT/wrtembed \
+            OpenRPT/writer \
+            OpenRPT/renderapp \
+            OpenRPT/import \
+            OpenRPT/import_gui \
+            OpenRPT/export
+}
 
 CONFIG += ordered
-

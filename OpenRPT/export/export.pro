@@ -19,9 +19,10 @@
 #
 
 include( ../../global.pri )
+CONFIG -= dll
 
 TEMPLATE = app
-CONFIG += warn_on console
+CONFIG += warn_on console c++17
 
 TARGET = exportrpt
 DESTDIR = ../../bin
@@ -30,19 +31,14 @@ OBJECTS_DIR = tmp
 UI_DIR = tmp
 
 # Input
-HEADERS = ../common/builtinSqlFunctions.h		# MANU
+HEADERS = ../common/builtinSqlFunctions.h \
+          ../../common/dbtools.h		# MANU
 
 SOURCES += main.cpp \
-           ../common/builtinSqlFunctions.cpp	# MANU
+           ../common/builtinSqlFunctions.cpp \
+           ../../common/dbtools.cpp	# MANU
 
 INCLUDEPATH += ../../common ../common
-QMAKE_LIBDIR = ../../lib $$QMAKE_LIBDIR
-LIBS += -lopenrptcommon
 
-win32-msvc* {
-  PRE_TARGETDEPS += ../../lib/openrptcommon.$${LIBEXT}
-} else {
-  PRE_TARGETDEPS += ../../lib/libopenrptcommon.$${LIBEXT}
-}
-
-QT += xml sql
+QT += core xml sql
+QT -= gui
