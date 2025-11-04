@@ -39,15 +39,29 @@ macx {
 DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0 NO_PNG
 
 # expose generated headers from the common library when shadow building
+# Make shadow builds aware of generated headers from the common library.
 isEqual(TEMPLATE, subdirs) {
   # nothing
 } else {
-  INCLUDEPATH += $$OUT_PWD/../common
-  DEPENDPATH += $$OUT_PWD/../common
-  exists($$OUT_PWD/../common/tmp) {
-    INCLUDEPATH += $$OUT_PWD/../common/tmp
-    DEPENDPATH += $$OUT_PWD/../common/tmp
+  shadow_dirs = $$OUT_PWD
+  shadow_dirs += $$clean_path($$OUT_PWD/..)
+  shadow_dirs += $$clean_path($$OUT_PWD/../..)
+
+  for(shadow_dir, shadow_dirs) {
+    common_dir = $$shadow_dir/common
+    tmp_dir = $$common_dir/tmp
+    exists($$common_dir) {
+      INCLUDEPATH += $$common_dir
+      DEPENDPATH += $$common_dir
+    }
+    exists($$tmp_dir) {
+      INCLUDEPATH += $$tmp_dir
+      DEPENDPATH += $$tmp_dir
+    }
   }
+
+  INCLUDEPATH = $$unique(INCLUDEPATH)
+  DEPENDPATH = $$unique(DEPENDPATH)
 }
 
 LIBEXT = $${QMAKE_EXTENSION_SHLIB}

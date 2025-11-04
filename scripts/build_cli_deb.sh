@@ -11,9 +11,14 @@ cd "$REPO_ROOT"
 
 if command -v apt-get >/dev/null 2>&1; then
   if [[ "${SKIP_DEP_INSTALL:-}" != "1" ]]; then
-    info "Installing build prerequisites (requires sudo)…"
-    sudo apt-get update
-    sudo apt-get install -y build-essential devscripts debhelper qt6-base-dev qt6-base-dev-tools
+    if sudo -n true 2>/dev/null; then
+      info "Installing build prerequisites (requires sudo)…"
+      sudo apt-get update
+      sudo apt-get install -y build-essential devscripts debhelper qt6-base-dev qt6-base-dev-tools
+    else
+      info "Skipping automatic dependency installation (sudo not available)."
+      info "Install manually or rerun with SKIP_DEP_INSTALL=1."
+    fi
   else
     info "Skipping dependency installation (SKIP_DEP_INSTALL=1)."
   fi

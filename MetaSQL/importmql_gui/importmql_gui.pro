@@ -22,7 +22,7 @@ include( ../../global.pri )
 
 TEMPLATE = app
 CONFIG += qt warn_on
-INCLUDEPATH += ../../OpenRPT/common ../../common ../../../openrpt-build-desktop/common .. .
+INCLUDEPATH += ../../OpenRPT/common ../../common .. .
 
 TARGET=importmqlgui
 

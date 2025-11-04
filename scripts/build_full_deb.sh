@@ -12,11 +12,16 @@ cd "$REPO_ROOT"
 
 if command -v apt-get >/dev/null 2>&1; then
   if [[ "${SKIP_DEP_INSTALL:-}" != "1" ]]; then
-    info "Installing Qt5 build prerequisites (requires sudo)…"
-    sudo apt-get update
-    sudo apt-get install -y build-essential devscripts debhelper dpkg-dev fakeroot \
-      qtbase5-dev qttools5-dev qttools5-dev-tools libqt5sql5-psql libqt5svg5-dev \
-      libqt5xmlpatterns5-dev libdmtx-dev libpq-dev libglu1-mesa-dev
+    if sudo -n true 2>/dev/null; then
+      info "Installing Qt5 build prerequisites (requires sudo)…"
+      sudo apt-get update
+      sudo apt-get install -y build-essential devscripts debhelper dpkg-dev fakeroot \
+        qtbase5-dev qttools5-dev qttools5-dev-tools libqt5sql5-psql libqt5svg5-dev \
+        libqt5xmlpatterns5-dev libdmtx-dev libpq-dev libglu1-mesa-dev
+    else
+      warn "Skipping automatic dependency installation (sudo not available)."
+      warn "Install manually or rerun with SKIP_DEP_INSTALL=1."
+    fi
   else
     info "Skipping dependency installation (SKIP_DEP_INSTALL=1)."
   fi

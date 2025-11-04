@@ -22,6 +22,7 @@
 
 #include <QVariant>
 #include <QTableWidgetItem>
+#include <QButtonGroup>
 #include "reportparameterlistitem.h"
 
 ReportParameter::ReportParameter(QWidget* parent, Qt::WindowFlags fl)
@@ -164,4 +165,3 @@ void ReportParameter::sRemove()
   if(0 != item)
     delete item;
 }
-

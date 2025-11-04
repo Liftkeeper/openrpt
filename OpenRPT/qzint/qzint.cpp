@@ -16,6 +16,7 @@
 
 #include "qzint.h"
 #include <stdio.h>
+#include <QPainterPath>
 
 namespace Zint
 {
@@ -683,4 +684,3 @@ bool QZint::hasErrors()
 }
 
 }
-

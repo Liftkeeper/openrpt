@@ -23,7 +23,7 @@ include( ../../global.pri )
 TEMPLATE = lib
 CONFIG += qt warn_on
 
-INCLUDEPATH = ../../common ../common ../../../openrpt-build-desktop/common ../renderer ../images .
+INCLUDEPATH += ../../common ../common ../renderer ../images .
 
 DESTDIR = ../../lib
 MOC_DIR = tmp
@@ -152,4 +152,3 @@ TRANSLATIONS    = wrtembed_fr.ts wrtembed_it.ts wrtembed_ru.ts wrtembed_es.ts wr
 bundled_dmtx {
   INCLUDEPATH += ../Dmtx_Library
 }
-

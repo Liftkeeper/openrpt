@@ -25,8 +25,8 @@ CONFIG  += qt warn_on
 QT      +=  sql xml widgets printsupport
 DEFINES += MAKELIB
 
-INCLUDEPATH += ../common ../../openrpt-build-desktop/common
-DEPENDPATH += ../common ../../openrpt-build-desktop/common
+INCLUDEPATH += ../common
+DEPENDPATH += ../common
 QMAKE_LIBDIR += ../lib
 LIBS         += -lopenrptcommon
 

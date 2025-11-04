@@ -22,7 +22,7 @@ include( ../../global.pri )
 
 TEMPLATE = app
 CONFIG += qt warn_on
-INCLUDEPATH += ../common ../../common ../../../openrpt-build-desktop/common .
+INCLUDEPATH += ../common ../../common .
 
 TARGET=importrptgui
 
@@ -53,4 +53,3 @@ SOURCES += importwindow.cpp \
 
 #The following line was inserted by qt3to4
 QT += xml sql widgets
-

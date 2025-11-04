@@ -24,8 +24,8 @@ TEMPLATE = app
 CONFIG += qt warn_on
 QT     +=  sql xml widgets  printsupport
 
-INCLUDEPATH += .. ../tmp ../../common ../../../openrpt-build-desktop/MetaSQL/tmp  ../../../openrpt-build-desktop/common
-DEPENDPATH  += .. ../tmp ../../common ../../../openrpt-build-desktop/MetaSQL/tmp  ../../../openrpt-build-desktop/common
+INCLUDEPATH += .. ../tmp ../../common
+DEPENDPATH  += .. ../tmp ../../common
 
 unix:TARGET=metasql
 DESTDIR = ../../bin
