@@ -126,7 +126,7 @@ At build time, `fakeroot debian/rules binary` will place the resulting
 
 ---
 
-## 5. Building Manually
+## 5. Building the CLI Manually
 
 With the edits above in place:
 
@@ -149,7 +149,54 @@ make -j"$(nproc)"
 
 ---
 
-## 6. Automated Conversion Script
+## 6. Building the Full GUI/DB Suite (legacy package)
+
+The graphical designer, renderer, and database tools still rely on the Qt 5
+stack. Until the port to Qt 6 is completed, build them in a separate tree that
+keeps the upstream packaging layout:
+
+1. Install the Qt 5 toolchain alongside the CLI prerequisites:
+
+   ```bash
+   sudo apt install qtbase5-dev qttools5-dev qttools5-dev-tools libqt5sql5-psql
+   ```
+
+2. Start from a clean copy of the original sources **without** the CLI-only
+   packaging changes (for example by cloning the repository to a new folder).
+
+3. Create a shadow build directory named to match upstream expectations and
+   build with Qt 5:
+
+   ```bash
+   mkdir -p ../openrpt-build-desktop
+   cd ../openrpt-build-desktop
+   qmake ../openrpt/openrpt.pro
+   make -j"$(nproc)"
+   ```
+
+4. Produce the Debian package that ships the GUI tools and libraries:
+
+   ```bash
+   fakeroot debian/rules clean
+   fakeroot debian/rules binary
+   ```
+
+   The resulting `.deb` files will land alongside the build directory (for
+   example `../openrpt_<version>_amd64.deb`). This binary contains the classic
+   OpenRPT application suite (writer, renderer, database utilities, etc.).
+
+5. You can now install both packages side by side:
+
+   ```bash
+   sudo apt install ./debian/artifacts/openrpt-cli_*.deb \
+                    ../openrpt_<version>_amd64.deb
+   ```
+
+> **Heads-up**: the legacy package still depends on Qt 5 and retains the
+> historical `openrpt` packaging structure. When the GUI port to Qt 6 is
+> complete, these instructions can be updated to converge on a single build.
+
+## 7. Automated Conversion Script
 
 To reproduce all of the above from a fresh checkout:
 
@@ -171,7 +218,7 @@ installable package is ready in `debian/artifacts/`.
 
 ---
 
-## 7. Verification Checklist
+## 8. Verification Checklist
 
 - `build-cli/bin/importrpt` and `build-cli/bin/exportrpt` run and show usage
   text.

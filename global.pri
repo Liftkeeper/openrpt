@@ -38,6 +38,18 @@ macx {
 # NO_PNG removes dependency on libpng for Zint
 DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0 NO_PNG
 
+# expose generated headers from the common library when shadow building
+isEqual(TEMPLATE, subdirs) {
+  # nothing
+} else {
+  INCLUDEPATH += $$OUT_PWD/../common
+  DEPENDPATH += $$OUT_PWD/../common
+  exists($$OUT_PWD/../common/tmp) {
+    INCLUDEPATH += $$OUT_PWD/../common/tmp
+    DEPENDPATH += $$OUT_PWD/../common/tmp
+  }
+}
+
 LIBEXT = $${QMAKE_EXTENSION_SHLIB}
 win32-g++:LIBEXT = a
 macx:LIBEXT      = a
