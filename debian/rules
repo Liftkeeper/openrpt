@@ -1,34 +1,24 @@
 #!/usr/bin/make -f
 
-include /usr/share/dpkg/architecture.mk
-
-# this tells OpenRPT's build system not to build its own copy of libdmtx
-export USE_SYSTEM_DMTX=1
-
 %:
-	dh $@ --builddirectory=. --parallel
-
-override_dh_auto_clean:
-	rm -rf bin/* OpenRPT/Dmtx_Library
-	chmod -x OpenRPT/images/*.png
-	dh_auto_clean
+	dh $@ --builddirectory=build-cli
 
 override_dh_auto_configure:
-	lrelease */*/*.ts */*.ts
-	# convert to dynamic linking
-	#find . -name '*.pro' -a -not -path './.pc/*' -exec sed -i.orig -e 's/staticlib/dll/g' -e 's/lib\([A-Za-z]*\)\.a/lib\1.so/'  {} \;
-	dh_auto_configure
+	mkdir -p build-cli
+	cd build-cli && qmake6 CONFIG+=cli_only ../openrpt.pro
+
+override_dh_auto_build:
+	$(MAKE) -C build-cli
 
 override_dh_auto_install:
-	mv bin/graph bin/openrpt-graph
-	mkdir -p debian/tmp/usr/lib/$(DEB_HOST_MULTIARCH)
-	mv lib/lib*.so* debian/tmp/usr/lib/$(DEB_HOST_MULTIARCH)
-	dh_auto_install
-	#find . -name '*.pro' -a -not -path './.pc/*' -exec test -e {}.orig \; -a -exec mv -f {}.orig {} \;
+	@true
 
-get-orig-source:
-	@d=$$(readlink -e $(MAKEFILE_LIST)); \
-	cd $${d%/*}/..; \
-	debian/get-orig-source.sh $(CURDIR) +dfsg
+override_dh_auto_clean:
+	if [ -f build-cli/Makefile ]; then \
+		$(MAKE) -C build-cli clean; \
+	fi
+	rm -rf build-cli
 
-.PHONY: override_dh_auto_configure override_dh_auto_install override_dh_auto_clean get-orig-source
+override_dh_builddeb:
+	mkdir -p $(CURDIR)/debian/artifacts
+	dh_builddeb --destdir=$(CURDIR)/debian/artifacts

@@ -1,3 +1,10 @@
+openrpt (3.3.13-1ubuntu24cli1) unstable; urgency=medium
+
+  * Build CLI-only importer/exporter against Qt 6 for Ubuntu 24.04.
+  * Simplify Debian packaging to ship the headless openrpt-cli binary.
+
+ -- OpenRPT Maintainers <maintainers@example.com>  Tue, 04 Nov 2025 10:48:30 +0000
+
 openrpt (3.3.13-1) unstable; urgency=medium
 
   * Placeholder
